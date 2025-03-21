@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.45.1">
+<file name="/home/hek_distro/uvg_repos/Proyecto1/lisptojava/src/main/java/lispanalysis/App.java">
+</file>
+<file name="/home/hek_distro/uvg_repos/Proyecto1/lisptojava/src/test/java/lispanalysis/AppTest.java">
+<error line="8" severity="error" message="Line has trailing spaces." source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck"/>
+<error line="11" severity="error" message="Line has trailing spaces." source="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineCheck"/>
+</file>
+</checkstyle>
