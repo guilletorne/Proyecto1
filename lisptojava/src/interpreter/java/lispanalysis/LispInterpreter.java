@@ -4,6 +4,16 @@ import java.util.List;
 
 public class LispInterpreter {
     
+    public String interpretToMain(ASTNode node) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("public class Generated {\n");
+        sb.append("    public static void main(String[] args) {\n");
+        sb.append(interpret(node));
+        sb.append("    }\n");
+        sb.append("}\n");
+        return sb.toString();
+    }
+
     public String interpret(ASTNode node) {
         if (node instanceof ASTFunctionCall) {
             return interpretFunctionCall((ASTFunctionCall) node);
