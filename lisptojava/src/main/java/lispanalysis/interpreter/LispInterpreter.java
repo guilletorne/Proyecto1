@@ -1,6 +1,10 @@
-package lispanalysis;
+package lispanalysis.interpreter;
 
-import java.util.List;
+import lispanalysis.ast.ASTNode;
+import lispanalysis.ast.ASTDefun;
+import lispanalysis.ast.ASTFunctionCall;
+import lispanalysis.ast.ASTCond;
+import lispanalysis.ast.ASTLiteral;
 
 public class LispInterpreter {
     
@@ -21,8 +25,8 @@ public class LispInterpreter {
             return interpretLiteral((ASTLiteral) node);
         } else if (node instanceof ASTDefun) {
             return interpretDefun((ASTDefun) node);
-        } else if (node instanceof ASTIf) {
-            return interpretIf((ASTIf) node);
+        } else if (node instanceof ASTCond) {
+            return interpretCond((ASTCond) node);
         } else {
             throw new IllegalArgumentException("Unknown AST node type: " + node.getClass());
         }
@@ -30,10 +34,10 @@ public class LispInterpreter {
 
     private String interpretFunctionCall(ASTFunctionCall node) {
         StringBuilder sb = new StringBuilder();
-        sb.append(node.functionName).append("(");
-        for (int i = 0; i < node.arguments.size(); i++) {
-            sb.append(interpret(node.arguments.get(i)));
-            if (i < node.arguments.size() - 1) {
+        sb.append(node.getFunctionName()).append("(");
+        for (int i = 0; i < node.getArguments().size(); i++) {
+            sb.append(interpret(node.getArguments().get(i)));
+            if (i < node.getArguments().size() - 1) {
                 sb.append(", ");
             }
         }
@@ -42,30 +46,30 @@ public class LispInterpreter {
     }
 
     private String interpretLiteral(ASTLiteral node) {
-        return node.value; // Assuming literals are already in a Java-compatible format
+        return node.getValue(); // Assuming literals are already in a Java-compatible format
     }
 
     private String interpretDefun(ASTDefun node) {
         StringBuilder sb = new StringBuilder();
-        sb.append("public static ").append("void ").append(node.functionName).append("(");
-        for (int i = 0; i < node.parameters.size(); i++) {
-            sb.append("int ").append(node.parameters.get(i)); // Assuming parameters are integers
-            if (i < node.parameters.size() - 1) {
+        sb.append("public static ").append("void ").append(node.getFunctionName()).append("(");
+        for (int i = 0; i < node.getParameters().size(); i++) {
+            sb.append("int ").append(node.getParameters().get(i)); // Assuming parameters are integers
+            if (i < node.getParameters().size() - 1) {
                 sb.append(", ");
             }
         }
         sb.append(") {\n");
-        sb.append(interpret(node.body)).append("\n");//recursivity
+        sb.append(interpret(node.getBody())).append("\n");//recursivity
         sb.append("}\n");
         return sb.toString();
     }
 
-    private String interpretIf(ASTIf node) {
+    private String interpretCond(ASTCond node) {
         StringBuilder sb = new StringBuilder();
-        sb.append("if (").append(interpret(node.condition)).append(") {\n");
-        sb.append(interpret(node.thenBranch)).append("\n");
+        sb.append("if (").append(interpret(node.getCondition())).append(") {\n");
+        sb.append(interpret(node.getThenBranch())).append("\n");
         sb.append("} else {\n");
-        sb.append(interpret(node.elseBranch)).append("\n");
+        sb.append(interpret(node.getElseBranch())).append("\n");
         sb.append("}");
         return sb.toString();
     }

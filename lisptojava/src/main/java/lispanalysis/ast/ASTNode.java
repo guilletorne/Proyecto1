@@ -1,6 +1,6 @@
-package lispanalysis;
+package lispanalysis.ast;
 
-abstract class ASTNode {
+public abstract class ASTNode {
     // Base class for all AST nodes
     @Override
     public abstract String toString();

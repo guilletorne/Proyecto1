@@ -1,6 +1,4 @@
-package lispanalysis;
-
-import java.io.File;
+package lispanalysis.execution;
 
 public class JavaCompilerRunner {
 
@@ -23,8 +21,11 @@ public class JavaCompilerRunner {
             runProcess.inheritIO(); // Redirect output to console
             Process run = runProcess.start();
             run.waitFor();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Thread was interrupted", e);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error while compiling and running the Java program", e);
         }
     }
 }

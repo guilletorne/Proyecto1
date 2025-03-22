@@ -1,15 +1,22 @@
-package lispanalysis;
+//lisptojava.src.main.java.
 
-import java.util.Arrays;
+package lispanalysis.main;
+
+import lispanalysis.tokenizer.Tokenizer;
+import lispanalysis.parser.LispParser;
+import lispanalysis.ast.ASTNode;
+import lispanalysis.interpreter.LispInterpreter;
+import lispanalysis.execution.JavaFileWriter;
+import lispanalysis.execution.JavaCompilerRunner;
+
 import java.util.Iterator;
-
 public class Main {
     public static void main(String[] args) {
         // Example LISP expression: (defun add (x y) (+ x y))
         String lispExpression = "(defun add (x y) (+ x y))";
-        Tokenizer tokenizer = new Tokenizer(lispExpression);
+        Iterator<String> tokens = new Tokenizer().tokenize(lispExpression);
 
-        LispParser parser = new LispParser(tokenIterator);
+        LispParser parser = new LispParser(tokens);
         ASTNode ast = parser.parse();
 
         // Interpret the AST to Java code

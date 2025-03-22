@@ -1,8 +1,9 @@
-package lispanalysis;
+package lispanalysis.tokenizer;
 
 import java.util.Iterator;
+import java.util.Arrays;
 
-class Tokenizer {
+public class Tokenizer {
     /**
      * Tokenizes the input string by adding spaces around parentheses
      * and splitting the string by whitespace.
@@ -14,7 +15,8 @@ class Tokenizer {
         input = input.replaceAll("[()]", " $0 ");
         //[()] character class that matches either ( or ).
         //$0 refers to the entire match found by the regular expression.
-        return input.trim().split("\\s+");
+        
+        return Arrays.asList(input.trim().split("\\s+")).iterator();
         // s+ regex for one or more whitespace characters
     }
 }
