@@ -24,7 +24,6 @@ public class LispParser {
         return parseExpression(token);
     }
 
-    //reduce cognitive complexity = more modular & readable code (later)
     private ASTNode parseExpression(String token) {
         if (token.equals("(")) {
             String functionName = tokens.next(); // Get the function name
