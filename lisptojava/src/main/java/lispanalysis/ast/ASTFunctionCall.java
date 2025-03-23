@@ -1,14 +1,14 @@
 package lispanalysis.ast;
 
-import java.util.List;
-
 public class ASTFunctionCall extends ASTNode {
     private String functionName;
-    private List<ASTNode> arguments;
+    private ASTNode argument1;
+    private ASTNode argument2;
 
-    public ASTFunctionCall(String functionName, List<ASTNode> arguments) {
+    public ASTFunctionCall(String functionName, ASTNode argument1, ASTNode argument2) {
         this.functionName = functionName;
-        this.arguments = arguments;
+        this.argument1 = argument1;
+        this.argument2 = argument2;
     }
 
     public String getFunctionName() {
@@ -19,17 +19,25 @@ public class ASTFunctionCall extends ASTNode {
         this.functionName = functionName;
     }
 
-    public List<ASTNode> getArguments() {
-        return arguments;
+    public ASTNode getArgument1() {
+        return argument1;
     }
 
-    public void setArguments(List<ASTNode> arguments) {
-        this.arguments = arguments;
+    public void setArgument1(ASTNode argument1) {
+        this.argument1 = argument1;
+    }
+
+    public ASTNode getArgument2() {
+        return argument2;
+    }
+
+    public void setArgument2(ASTNode argument2) {
+        this.argument2 = argument2;
     }
 
     @Override
     public String toString() {
-        return functionName + "(" + arguments + ")";
-
+    return "FunctionCall(" + functionName + ", " + argument1 + ", " + argument2 + ")";
     }
+    
 }

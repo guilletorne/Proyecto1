@@ -6,6 +6,7 @@ import java.util.List;
 import lispanalysis.ast.ASTNode;
 import lispanalysis.ast.ASTDefun;
 import lispanalysis.ast.ASTCond;
+import lispanalysis.ast.ASTFunction;
 import lispanalysis.ast.ASTFunctionCall;
 import lispanalysis.ast.ASTLiteral;
 
@@ -34,14 +35,16 @@ public class LispParser {
             } else if (functionName.equals("cond")) {
                 // Handle cond
                 return handleCond();
+            } else if (functionName.equals("+") || functionName.equals("-") || functionName.equals("*") || functionName.equals("/")) {
+                // Handle functions
+                return handleFunction(functionName);
             } else {
                 // Handle function calls
                 return handleFunctionCall(functionName);
             }
-        } else {
-            // It's a literal
-            return new ASTLiteral(token);
-        }
+        } 
+        // It's a literal
+        return new ASTLiteral(token);
     }
 
     public ASTNode handleDefun() {
@@ -65,15 +68,15 @@ public class LispParser {
         return new ASTCond(condition, thenBranch, elseBranch);
     }
 
+    public ASTNode handleFunction(String functionName) {
+        String value1 = tokens.next();
+        String value2 = tokens.next();
+        return new ASTFunction(functionName, value1, value2);
+    }
+
     public ASTNode handleFunctionCall(String functionName) {
-        List<ASTNode> arguments = new ArrayList<>();
-                while (tokens.hasNext()) {
-                    String nextToken = tokens.next();
-                    if (nextToken.equals(")")) {
-                        break; // End of the function call
-                    }
-                    arguments.add(parseExpression(nextToken));
-                }
-                return new ASTFunctionCall(functionName, arguments);
+        ASTNode argument1 = parseExpression(tokens.next());
+        ASTNode argument2 = parseExpression(tokens.next());
+        return new ASTFunctionCall(functionName, argument1, argument2);
     }
 }

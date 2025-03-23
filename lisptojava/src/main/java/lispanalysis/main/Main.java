@@ -8,12 +8,12 @@ import lispanalysis.ast.ASTNode;
 import lispanalysis.interpreter.LispInterpreter;
 import lispanalysis.execution.JavaFileWriter;
 import lispanalysis.execution.JavaCompilerRunner;
-
 import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
-        // Example LISP expression: (defun add (x y) (+ x y))
-        String lispExpression = "(defun add (x y) (+ x y))";
+        // Example LISP expression: (defun add (x y) (+ x y)) (add 3 4)
+        String lispExpression = "(defun add (x y) (+ x y)) (add 3 4)";
         Iterator<String> tokens = new Tokenizer().tokenize(lispExpression);
 
         LispParser parser = new LispParser(tokens);
@@ -21,7 +21,7 @@ public class Main {
 
         // Interpret the AST to Java code
         LispInterpreter interpreter = new LispInterpreter();
-        String javaCode = interpreter.interpret(ast);
+        String javaCode = interpreter.interpretToMain(ast);
 
         // Write the generated Java code to a file
         String fileName = "Generated.java";

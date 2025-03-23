@@ -41,4 +41,8 @@ public class ASTDefun extends ASTNode {
     public String toString() {
         return "Defun " + functionName + "(" + parameters + ") " + body;
     }
+
+    public String toStringName() {
+        return functionName;
+    }
 }
